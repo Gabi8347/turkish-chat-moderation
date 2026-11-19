@@ -51,5 +51,36 @@
     "hardware": "13th Gen Intel(R) Core(TM) i7-13650HX (CPU only), Windows 11",
     "family": "classical (rules)",
     "precision": "n/a"
+  },
+  "w2v_ffn": {
+    "model": "w2v_ffn",
+    "threshold": 0.61,
+    "macro_f1": 0.6914,
+    "accuracy": 0.8019,
+    "f1_offensive": 0.5067,
+    "confusion_matrix": [
+      [
+        2470,
+        342
+      ],
+      [
+        357,
+        359
+      ]
+    ],
+    "size_mb": 13.082,
+    "latency_ms_mean": 0.147,
+    "latency_ms_p95": 0.216,
+    "latency_runs": 200,
+    "hardware": "13th Gen Intel(R) Core(TM) i7-13650HX (CPU only), Windows 11",
+    "family": "neural network (own word2vec + FFN, SGD)",
+    "precision": "fp32",
+    "params": {
+      "ffn_parameters": 34049,
+      "w2v_vocab": 29736,
+      "dim": 100,
+      "best_epoch": 14
+    },
+    "val_macro_f1": 0.7121
   }
 }
