@@ -1,0 +1,116 @@
+== PyTorch dynamic INT8
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:   8%|▊         | 16/201 [00:00<00:01, 133.77it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 958.79it/s]
+C:\dev\swe015-chat-moderation\src\quantize.py:44: DeprecationWarning: torch.ao.quantization is deprecated and will be removed in 2.10. 
+For migrations of users: 
+1. Eager mode quantization (torch.ao.quantization.quantize, torch.ao.quantization.quantize_dynamic), please migrate to use torchao eager mode quantize_ API instead 
+2. FX graph mode quantization (torch.ao.quantization.quantize_fx.prepare_fx,torch.ao.quantization.quantize_fx.convert_fx, please migrate to use torchao pt2e quantization API instead (prepare_pt2e, convert_pt2e) 
+3. pt2e quantization has been migrated to torchao (https://github.com/pytorch/ao/tree/main/torchao/quantization/pt2e) 
+see https://github.com/pytorch/ao/issues/2259 for more details
+  qmodel = quantize_dynamic(model, {nn.Linear}, dtype=torch.qint8)
+C:\dev\swe015-chat-moderation\.venv\Lib\site-packages\torch\ao\nn\quantized\modules\utils.py:72: UserWarning: torch.quantize_per_tensor, torch.quantize_per_channel and other quantized tensor creation functions that produce tensors with dtype torch.quint8, torch.qint8, and torch.qint32 are deprecated and will be removed in a future PyTorch release. Please see https://github.com/pytorch/pytorch/issues/184982 for more information. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\aten\src\ATen\quantized\Quantizer.cpp:116.)
+  qweight = torch.quantize_per_tensor(
+C:\dev\swe015-chat-moderation\src\quantize.py:57: DeprecationWarning: torch.ao.quantization is deprecated and will be removed in 2.10. 
+For migrations of users: 
+1. Eager mode quantization (torch.ao.quantization.quantize, torch.ao.quantization.quantize_dynamic), please migrate to use torchao eager mode quantize_ API instead 
+2. FX graph mode quantization (torch.ao.quantization.quantize_fx.prepare_fx,torch.ao.quantization.quantize_fx.convert_fx, please migrate to use torchao pt2e quantization API instead (prepare_pt2e, convert_pt2e) 
+3. pt2e quantization has been migrated to torchao (https://github.com/pytorch/ao/tree/main/torchao/quantization/pt2e) 
+see https://github.com/pytorch/ao/issues/2259 for more details
+  qmodel = quantize_dynamic(model, {nn.Linear}, dtype=torch.qint8)
+C:\dev\swe015-chat-moderation\.venv\Lib\site-packages\torch\_utils.py:466: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  device=storage.device,
+{
+  "model": "berturk_int8_pytorch",
+  "threshold": 0.25,
+  "macro_f1": 0.8176,
+  "accuracy": 0.8807,
+  "f1_offensive": 0.7103,
+  "confusion_matrix": [
+    [
+      2591,
+      221
+    ],
+    [
+      200,
+      516
+    ]
+  ],
+  "size_mb": 186.036,
+  "latency_ms_mean": 15.529,
+  "latency_ms_p95": 22.337,
+  "latency_runs": 200,
+  "threads": 4,
+  "meets_budget": true,
+  "hardware": "13th Gen Intel(R) Core(TM) i7-13650HX, CPU only, 4 threads, Windows 11",
+  "family": "transformer (BERTurk fine-tuned)",
+  "val_threshold_from": "berturk_fp32",
+  "precision": "int8 weights (dynamic), fp32 activations",
+  "method": "torch.ao.quantization.quantize_dynamic, nn.Linear -> qint8"
+}
+== ONNX export (FP32) + ONNX Runtime
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:  12%|█▏        | 25/201 [00:00<00:00, 249.67it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 1556.85it/s]
+C:\dev\swe015-chat-moderation\src\quantize.py:71: DeprecationWarning: You are using the legacy TorchScript-based ONNX export. Starting in PyTorch 2.9, the new torch.export-based ONNX exporter has become the default. Learn more about the new export logic: https://docs.pytorch.org/docs/stable/onnx_export.html. For exporting control flow: https://pytorch.org/tutorials/beginner/onnx/export_control_flow_model_to_onnx_tutorial.html
+  torch.onnx.export(model, tuple(enc[n] for n in names), str(ONNX_FP32), input_names=names,
+C:\dev\swe015-chat-moderation\.venv\Lib\site-packages\transformers\masking_utils.py:244: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if (padding_length := kv_length + kv_offset - attention_mask.shape[-1]) > 0:
+C:\dev\swe015-chat-moderation\.venv\Lib\site-packages\transformers\integrations\sdpa_attention.py:159: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  is_causal = q_length > 1 and attention_mask is None and is_causal
+C:\dev\swe015-chat-moderation\.venv\Lib\site-packages\torch\onnx\_internal\torchscript_exporter\symbolic_opset11.py:955: UserWarning: Exporting aten::index operator of advanced indexing in opset 17 is achieved by combination of multiple ONNX operators, including Reshape, Transpose, Concat, and Gather. If indices include negative values, the exported graph will produce incorrect results.
+  return opset9.index(g, self, index)
+WARNING:root:Please consider to run pre-processing before quantization. Refer to example: https://github.com/microsoft/onnxruntime-inference-examples/blob/main/quantization/image_classification/cpu/ReadMe.md 
+{
+  "model": "berturk_onnx_fp32",
+  "threshold": 0.25,
+  "macro_f1": 0.8213,
+  "accuracy": 0.8815,
+  "f1_offensive": 0.7176,
+  "confusion_matrix": [
+    [
+      2579,
+      233
+    ],
+    [
+      185,
+      531
+    ]
+  ],
+  "size_mb": 442.727,
+  "latency_ms_mean": 17.223,
+  "latency_ms_p95": 28.144,
+  "latency_runs": 200,
+  "threads": 4,
+  "meets_budget": false,
+  "hardware": "13th Gen Intel(R) Core(TM) i7-13650HX, CPU only, 4 threads, Windows 11",
+  "family": "transformer (BERTurk fine-tuned)",
+  "val_threshold_from": "berturk_fp32",
+  "precision": "fp32",
+  "method": "torch.onnx.export + ONNX Runtime"
+}
+== ONNX Runtime dynamic INT8
+{
+  "model": "berturk_onnx_int8",
+  "threshold": 0.25,
+  "macro_f1": 0.8192,
+  "accuracy": 0.8812,
+  "f1_offensive": 0.7132,
+  "confusion_matrix": [
+    [
+      2588,
+      224
+    ],
+    [
+      195,
+      521
+    ]
+  ],
+  "size_mb": 111.434,
+  "latency_ms_mean": 7.449,
+  "latency_ms_p95": 12.669,
+  "latency_runs": 200,
+  "threads": 4,
+  "meets_budget": true,
+  "hardware": "13th Gen Intel(R) Core(TM) i7-13650HX, CPU only, 4 threads, Windows 11",
+  "family": "transformer (BERTurk fine-tuned)",
+  "val_threshold_from": "berturk_fp32",
+  "precision": "int8 weights (dynamic), fp32 activations",
+  "method": "onnxruntime.quantization.quantize_dynamic, QInt8"
+}
