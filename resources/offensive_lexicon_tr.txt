@@ -1,0 +1,83 @@
+# Hand-written Turkish offensive-word lexicon for the rule baseline (author's own list).
+# One entry per line.  "stem*" = prefix match (Turkish suffixes: şerefsiz-ler-in),
+# plain entry = whole-token match.  Matching folds ç ş ğ ö ü to ASCII but keeps ı
+# (adı "name" vs. adi "vile"), so the ASCII spelling of words with ı is listed as well.
+# Matching uses a weighted edit distance (see src/lexicon.py).  Short / ambiguous roots
+# are listed as exact forms only (e.g. "göt" but not "göt*", which would also match
+# "götürmek" = to carry).
+amk
+amq
+aq
+amına*
+amina*
+amını*
+amini*
+amcık*
+amcik*
+amcığ*
+amcig*
+oç
+piç
+piçler*
+piçlik*
+piclik*
+göt
+götün
+götünü
+götveren*
+götlek*
+yarrak*
+yarak
+yarağ*
+yarram*
+siktir*
+sikerim*
+sikeyim*
+sikim*
+sikik*
+sikiş*
+siktiğ*
+sikiyim*
+sokayım*
+sokayim*
+orospu*
+orosbu*
+kahpe*
+kaltak*
+fahişe*
+sürtük*
+kancık*
+kancik*
+şerefsiz*
+haysiyetsiz*
+namussuz*
+pezevenk*
+gavat*
+ibne*
+puşt*
+yavşak*
+dangalak*
+gerizekalı*
+gerizekali*
+salak*
+aptal*
+ahmak*
+embesil*
+dallama*
+mal
+malsın
+malsin
+mallar
+adi
+adiler
+alçak
+alçaklar
+aşağılık*
+asagilik*
+pislik*
+lavuk*
+beyinsiz*
+soysuz*
+hayvanoğlu*
+hayvanoglu*
+defol*

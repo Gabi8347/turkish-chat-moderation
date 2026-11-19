@@ -1,0 +1,55 @@
+{
+  "tfidf_logreg": {
+    "model": "tfidf_logreg",
+    "threshold": 0.56,
+    "macro_f1": 0.7673,
+    "accuracy": 0.8535,
+    "f1_offensive": 0.6256,
+    "confusion_matrix": [
+      [
+        2579,
+        233
+      ],
+      [
+        284,
+        432
+      ]
+    ],
+    "size_mb": 2.767,
+    "latency_ms_mean": 1.058,
+    "latency_ms_p95": 1.328,
+    "latency_runs": 200,
+    "hardware": "13th Gen Intel(R) Core(TM) i7-13650HX (CPU only), Windows 11",
+    "family": "classical (learned)",
+    "precision": "fp64",
+    "params": {
+      "C": 1,
+      "n_features": 163851
+    },
+    "val_macro_f1": 0.7805
+  },
+  "lexicon_rules": {
+    "model": "lexicon_rules",
+    "threshold": 0.5,
+    "macro_f1": 0.6732,
+    "accuracy": 0.8489,
+    "f1_offensive": 0.4336,
+    "confusion_matrix": [
+      [
+        2791,
+        21
+      ],
+      [
+        512,
+        204
+      ]
+    ],
+    "size_mb": 0.001,
+    "latency_ms_mean": 4.119,
+    "latency_ms_p95": 10.056,
+    "latency_runs": 200,
+    "hardware": "13th Gen Intel(R) Core(TM) i7-13650HX (CPU only), Windows 11",
+    "family": "classical (rules)",
+    "precision": "n/a"
+  }
+}
