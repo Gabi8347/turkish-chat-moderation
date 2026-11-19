@@ -1,0 +1,17 @@
+{
+  "train": {
+    "n": 28580,
+    "offensive": 5518,
+    "offensive_ratio": 0.1931
+  },
+  "val": {
+    "n": 3176,
+    "offensive": 613,
+    "offensive_ratio": 0.193
+  },
+  "test": {
+    "n": 3528,
+    "offensive": 716,
+    "offensive_ratio": 0.2029
+  }
+}

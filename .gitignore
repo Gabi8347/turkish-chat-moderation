@@ -7,3 +7,4 @@ models/
 *.safetensors
 *.pt
 .ipynb_checkpoints/
+data/processed/
