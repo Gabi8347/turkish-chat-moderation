@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+data/raw/
+models/
+*.onnx
+*.bin
+*.safetensors
+*.pt
+.ipynb_checkpoints/
