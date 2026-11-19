@@ -5,7 +5,8 @@ P(offensive) for raw texts (normalization happens inside the model wrapper), so 
 are measured the same way:
 
   - task metric : macro-F1 on the official test set (classes are imbalanced), plus accuracy,
-                  F1 of the offensive class and the confusion matrix
+                  F1 of the offensive class and the confusion matrix; predicted one message
+                  at a time, as in the application
   - size        : bytes of the serialized model files on disk, in MB
   - latency     : one message at a time (as in a live chat), averaged over N_LATENCY = 200
                   test messages after 10 warm-up calls, mean and p95 in ms, CPU only,
@@ -89,7 +90,9 @@ def size_mb(paths) -> float:
 def report(name, predict_proba, test_df, threshold, files, extra=None) -> dict:
     """Evaluate one model on the test set, benchmark it and store the row in results.json."""
     set_threads()
-    proba = predict_proba(test_df["text"].tolist())
+    # one message per call, exactly as in the live chat: dynamic INT8 quantization scales the
+    # activations per call, so batched predictions of the quantized models differ slightly
+    proba = np.array([predict_proba([t])[0] for t in test_df["text"]], dtype=np.float64)
     y_pred = (proba >= threshold).astype(int)
     row = {"model": name, "threshold": threshold, **metrics(test_df["label"].values, y_pred),
            "size_mb": size_mb(files), **latency_ms(predict_proba, test_df["text"]),

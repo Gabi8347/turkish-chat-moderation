@@ -16,8 +16,8 @@
       ]
     ],
     "size_mb": 2.767,
-    "latency_ms_mean": 1.091,
-    "latency_ms_p95": 1.37,
+    "latency_ms_mean": 1.514,
+    "latency_ms_p95": 1.479,
     "latency_runs": 200,
     "threads": 4,
     "meets_budget": true,
@@ -47,8 +47,8 @@
       ]
     ],
     "size_mb": 0.001,
-    "latency_ms_mean": 4.02,
-    "latency_ms_p95": 9.798,
+    "latency_ms_mean": 4.038,
+    "latency_ms_p95": 9.832,
     "latency_runs": 200,
     "threads": 4,
     "meets_budget": true,
@@ -73,8 +73,8 @@
       ]
     ],
     "size_mb": 13.082,
-    "latency_ms_mean": 0.151,
-    "latency_ms_p95": 0.234,
+    "latency_ms_mean": 0.128,
+    "latency_ms_p95": 0.202,
     "latency_runs": 200,
     "threads": 4,
     "meets_budget": true,
@@ -106,8 +106,8 @@
       ]
     ],
     "size_mb": 443.255,
-    "latency_ms_mean": 21.262,
-    "latency_ms_p95": 37.219,
+    "latency_ms_mean": 20.161,
+    "latency_ms_p95": 34.945,
     "latency_runs": 200,
     "threads": 4,
     "meets_budget": false,
@@ -124,22 +124,22 @@
   "berturk_int8_pytorch": {
     "model": "berturk_int8_pytorch",
     "threshold": 0.25,
-    "macro_f1": 0.8176,
-    "accuracy": 0.8807,
-    "f1_offensive": 0.7103,
+    "macro_f1": 0.818,
+    "accuracy": 0.8815,
+    "f1_offensive": 0.7105,
     "confusion_matrix": [
       [
-        2591,
-        221
+        2597,
+        215
       ],
       [
-        200,
-        516
+        203,
+        513
       ]
     ],
     "size_mb": 186.036,
-    "latency_ms_mean": 15.529,
-    "latency_ms_p95": 22.337,
+    "latency_ms_mean": 14.164,
+    "latency_ms_p95": 20.197,
     "latency_runs": 200,
     "threads": 4,
     "meets_budget": true,
@@ -166,8 +166,8 @@
       ]
     ],
     "size_mb": 442.727,
-    "latency_ms_mean": 17.223,
-    "latency_ms_p95": 28.144,
+    "latency_ms_mean": 16.742,
+    "latency_ms_p95": 27.851,
     "latency_runs": 200,
     "threads": 4,
     "meets_budget": false,
@@ -180,22 +180,22 @@
   "berturk_onnx_int8": {
     "model": "berturk_onnx_int8",
     "threshold": 0.25,
-    "macro_f1": 0.8192,
-    "accuracy": 0.8812,
-    "f1_offensive": 0.7132,
+    "macro_f1": 0.8228,
+    "accuracy": 0.8838,
+    "f1_offensive": 0.7188,
     "confusion_matrix": [
       [
-        2588,
-        224
+        2594,
+        218
       ],
       [
-        195,
-        521
+        192,
+        524
       ]
     ],
     "size_mb": 111.434,
-    "latency_ms_mean": 7.449,
-    "latency_ms_p95": 12.669,
+    "latency_ms_mean": 6.97,
+    "latency_ms_p95": 11.991,
     "latency_runs": 200,
     "threads": 4,
     "meets_budget": true,
