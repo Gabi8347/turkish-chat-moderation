@@ -145,7 +145,7 @@ def train(epochs=3, batch_size=32, lr=2e-5, warmup=0.1, weight_decay=0.01):
             "lr": lr, "warmup": warmup, "weight_decay": weight_decay, "mixed_precision": "fp16 (training only)",
             "gpu": torch.cuda.get_device_name(0), "history": history,
             "best_epoch": best[1], "threshold": best[2], "val_macro_f1": round(best[0], 4)}
-    INFO_FILE.write_text(json.dumps(info, indent=2))
+    INFO_FILE.write_text(json.dumps(info, indent=2), encoding="utf-8")
     print(json.dumps(info, indent=2))
 
 
@@ -153,7 +153,7 @@ def evaluate():
     from src.data import load
     from src.evaluate import report
 
-    info = json.loads(INFO_FILE.read_text())
+    info = json.loads(INFO_FILE.read_text(encoding="utf-8"))
     clf = BertClassifier.load(MODEL_DIR, device="cpu")
     files = [f for f in MODEL_DIR.iterdir() if f.is_file()]
     report("berturk_fp32", clf.predict_proba, load("test"), info["threshold"], files,
