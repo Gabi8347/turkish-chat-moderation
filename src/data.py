@@ -73,7 +73,7 @@ def build():
         stats[name] = {"n": len(df), "offensive": int(df["label"].sum()),
                        "offensive_ratio": round(float(df["label"].mean()), 4)}
     (ROOT / "results").mkdir(exist_ok=True)
-    (ROOT / "results" / "data_stats.json").write_text(json.dumps(stats, indent=2))
+    (ROOT / "results" / "data_stats.json").write_text(json.dumps(stats, indent=2), encoding="utf-8")
     print(json.dumps(stats, indent=2))
 
 

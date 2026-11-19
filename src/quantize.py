@@ -106,7 +106,7 @@ def main():
     from src.data import load
     from src.evaluate import report
 
-    info = json.loads(INFO_FILE.read_text())
+    info = json.loads(INFO_FILE.read_text(encoding="utf-8"))
     t = info["threshold"]
     test = load("test")
     common = {"family": "transformer (BERTurk fine-tuned)", "val_threshold_from": "berturk_fp32"}

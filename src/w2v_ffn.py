@@ -166,7 +166,7 @@ def train(epochs=80, batch_size=64, lr=0.005, patience=10):
     (ROOT / "results" / "w2v_ffn_training.json").write_text(json.dumps(
         {"word2vec": {**{k: v for k, v in W2V_PARAMS.items() if k != "hashfxn"}, "vocab_size": len(kv)},
          "nearest_neighbors": neighbors, "history": history, "best_epoch": best[1]},
-        indent=2, ensure_ascii=False))
+        indent=2, ensure_ascii=False), encoding="utf-8")
 
     w2v_files = [p for p in W2V_FILE.parent.glob(W2V_FILE.name + "*")]
     report("w2v_ffn", W2VFFNModel(kv, ffn).predict_proba, load("test"), t, w2v_files + [FFN_FILE],

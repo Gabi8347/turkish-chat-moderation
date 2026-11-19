@@ -97,10 +97,10 @@ def report(name, predict_proba, test_df, threshold, files, extra=None) -> dict:
     row = {"model": name, "threshold": threshold, **metrics(test_df["label"].values, y_pred),
            "size_mb": size_mb(files), **latency_ms(predict_proba, test_df["text"]),
            "hardware": hardware(), **(extra or {})}
-    results = json.loads(RESULTS.read_text()) if RESULTS.exists() else {}
+    results = json.loads(RESULTS.read_text(encoding="utf-8")) if RESULTS.exists() else {}
     results[name] = row
     RESULTS.parent.mkdir(exist_ok=True)
-    RESULTS.write_text(json.dumps(results, indent=2, ensure_ascii=False))
+    RESULTS.write_text(json.dumps(results, indent=2, ensure_ascii=False), encoding="utf-8")
     pred_dir = ROOT / "results" / "predictions"
     pred_dir.mkdir(parents=True, exist_ok=True)
     test_df.assign(proba=proba.round(4), pred=y_pred)[["id", "label", "pred", "proba"]].to_csv(
