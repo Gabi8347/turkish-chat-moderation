@@ -93,8 +93,9 @@ class W2VFFNModel:
 
 def train(epochs=80, batch_size=64, lr=0.005, patience=10):
     from src.data import load
-    from src.evaluate import best_threshold, report
+    from src.evaluate import best_threshold, report, set_threads
 
+    set_threads()  # fixed CPU thread count -> identical float summation order -> reproducible
     set_seed()
     tr, va = load("train"), load("val")
     tr_norm = [normalize(t) for t in tr.text]
@@ -176,5 +177,4 @@ def train(epochs=80, batch_size=64, lr=0.005, patience=10):
 
 
 if __name__ == "__main__":
-    torch.set_num_threads(4)
     train()

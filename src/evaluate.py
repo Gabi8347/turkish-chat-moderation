@@ -8,7 +8,9 @@ are measured the same way:
                   F1 of the offensive class and the confusion matrix
   - size        : bytes of the serialized model files on disk, in MB
   - latency     : one message at a time (as in a live chat), averaged over N_LATENCY = 200
-                  test messages after 10 warm-up calls, mean and p95 in ms, CPU only
+                  test messages after 10 warm-up calls, mean and p95 in ms, CPU only,
+                  N_THREADS = 4 CPU threads for every model (a moderation server shares its
+                  cores between many chats; 4 threads per request is the deployment budget)
 
 Results are merged into results/results.json (one entry per model).
 """
@@ -24,6 +26,8 @@ ROOT = Path(__file__).resolve().parents[1]
 RESULTS = ROOT / "results" / "results.json"
 N_LATENCY = 200
 N_WARMUP = 10
+N_THREADS = 4
+LATENCY_BUDGET_MS = 25.0  # p95 per message on N_THREADS CPU threads (see README)
 
 
 def hardware() -> str:
@@ -33,7 +37,8 @@ def hardware() -> str:
                              capture_output=True, text=True, timeout=20).stdout.strip()
     except Exception:
         cpu = ""
-    return f"{cpu or platform.processor()} (CPU only), {platform.system()} {platform.release()}"
+    return (f"{cpu or platform.processor()}, CPU only, {N_THREADS} threads, "
+            f"{platform.system()} {platform.release()}")
 
 
 def metrics(y_true, y_pred) -> dict:
@@ -52,7 +57,13 @@ def best_threshold(y_true, proba) -> float:
     return round(float(grid[int(np.argmax(scores))]), 2)
 
 
+def set_threads(n=N_THREADS):
+    import torch
+    torch.set_num_threads(n)
+
+
 def latency_ms(predict_proba, texts) -> dict:
+    set_threads()
     texts = list(texts)[:N_LATENCY]
     for t in texts[:N_WARMUP]:
         predict_proba([t])
@@ -63,7 +74,8 @@ def latency_ms(predict_proba, texts) -> dict:
         times.append((time.perf_counter() - t0) * 1000)
     return {"latency_ms_mean": round(float(np.mean(times)), 3),
             "latency_ms_p95": round(float(np.percentile(times, 95)), 3),
-            "latency_runs": len(times)}
+            "latency_runs": len(times), "threads": N_THREADS,
+            "meets_budget": bool(np.percentile(times, 95) <= LATENCY_BUDGET_MS)}
 
 
 def size_mb(paths) -> float:
@@ -76,6 +88,7 @@ def size_mb(paths) -> float:
 
 def report(name, predict_proba, test_df, threshold, files, extra=None) -> dict:
     """Evaluate one model on the test set, benchmark it and store the row in results.json."""
+    set_threads()
     proba = predict_proba(test_df["text"].tolist())
     y_pred = (proba >= threshold).astype(int)
     row = {"model": name, "threshold": threshold, **metrics(test_df["label"].values, y_pred),
