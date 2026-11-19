@@ -82,5 +82,35 @@
       "best_epoch": 14
     },
     "val_macro_f1": 0.7121
+  },
+  "berturk_fp32": {
+    "model": "berturk_fp32",
+    "threshold": 0.25,
+    "macro_f1": 0.8213,
+    "accuracy": 0.8815,
+    "f1_offensive": 0.7176,
+    "confusion_matrix": [
+      [
+        2579,
+        233
+      ],
+      [
+        185,
+        531
+      ]
+    ],
+    "size_mb": 443.255,
+    "latency_ms_mean": 19.747,
+    "latency_ms_p95": 31.799,
+    "latency_runs": 200,
+    "hardware": "13th Gen Intel(R) Core(TM) i7-13650HX (CPU only), Windows 11",
+    "family": "transformer (BERTurk fine-tuned)",
+    "precision": "fp32",
+    "params": {
+      "base_model": "dbmdz/bert-base-turkish-cased",
+      "parameters": 110618882,
+      "best_epoch": 2
+    },
+    "val_macro_f1": 0.8385
   }
 }

@@ -1,0 +1,105 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:  16%|█▌        | 31/199 [00:00<00:00, 307.71it/s]Loading weights:  31%|███       | 62/199 [00:00<00:00, 262.64it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 851.54it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: dbmdz/bert-base-turkish-cased
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.seq_relationship.bias                  | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.seq_relationship.weight                | UNEXPECTED | 
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+classifier.bias                            | MISSING    | 
+classifier.weight                          | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+epoch 1 step 200/894 loss 0.4995 (30s)
+epoch 1 step 400/894 loss 0.4127 (60s)
+epoch 1 step 600/894 loss 0.3710 (89s)
+epoch 1 step 800/894 loss 0.3480 (119s)
+== epoch 1: train loss 0.3409, val macro-F1 0.8329 (t=0.35)
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00,  3.80it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00,  3.80it/s]
+   saved best model to C:\dev\swe015-chat-moderation\models\berturk-offensive
+epoch 2 step 200/894 loss 0.2120 (170s)
+epoch 2 step 400/894 loss 0.2117 (199s)
+epoch 2 step 600/894 loss 0.2121 (229s)
+epoch 2 step 800/894 loss 0.2114 (259s)
+== epoch 2: train loss 0.2106, val macro-F1 0.8385 (t=0.25)
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00,  3.49it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00,  3.49it/s]
+   saved best model to C:\dev\swe015-chat-moderation\models\berturk-offensive
+epoch 3 step 200/894 loss 0.1481 (310s)
+epoch 3 step 400/894 loss 0.1407 (339s)
+epoch 3 step 600/894 loss 0.1384 (368s)
+epoch 3 step 800/894 loss 0.1356 (398s)
+== epoch 3: train loss 0.1346, val macro-F1 0.8346 (t=0.5)
+{
+  "base_model": "dbmdz/bert-base-turkish-cased",
+  "max_len": 128,
+  "epochs": 3,
+  "batch_size": 32,
+  "lr": 2e-05,
+  "warmup": 0.1,
+  "weight_decay": 0.01,
+  "mixed_precision": "fp16 (training only)",
+  "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.3409,
+      "val_macro_f1": 0.8329,
+      "threshold": 0.35,
+      "elapsed_s": 140
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.2106,
+      "val_macro_f1": 0.8385,
+      "threshold": 0.25,
+      "elapsed_s": 280
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.1346,
+      "val_macro_f1": 0.8346,
+      "threshold": 0.5,
+      "elapsed_s": 419
+    }
+  ],
+  "best_epoch": 2,
+  "threshold": 0.25,
+  "val_macro_f1": 0.8385
+}
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights:  13%|█▎        | 26/201 [00:00<00:00, 245.50it/s]Loading weights:  31%|███       | 62/201 [00:00<00:00, 309.71it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 899.72it/s]
+{
+  "model": "berturk_fp32",
+  "threshold": 0.25,
+  "macro_f1": 0.8213,
+  "accuracy": 0.8815,
+  "f1_offensive": 0.7176,
+  "confusion_matrix": [
+    [
+      2579,
+      233
+    ],
+    [
+      185,
+      531
+    ]
+  ],
+  "size_mb": 443.255,
+  "latency_ms_mean": 19.747,
+  "latency_ms_p95": 31.799,
+  "latency_runs": 200,
+  "hardware": "13th Gen Intel(R) Core(TM) i7-13650HX (CPU only), Windows 11",
+  "family": "transformer (BERTurk fine-tuned)",
+  "precision": "fp32",
+  "params": {
+    "base_model": "dbmdz/bert-base-turkish-cased",
+    "parameters": 110618882,
+    "best_epoch": 2
+  },
+  "val_macro_f1": 0.8385
+}
