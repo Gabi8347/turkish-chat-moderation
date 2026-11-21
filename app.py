@@ -7,10 +7,12 @@ the model flags a message without any lexicon word, the whole message is hidden.
 The side panel logs the model latency of every message against the 25 ms p95 budget and
 lets the user switch between all seven models of the ladder.
 
-Run:  python app.py        ->  http://127.0.0.1:7860
+Run:  python app.py        ->  http://127.0.0.1:7860 (the next free port if 7860 is busy)
 """
 import html
+import os
 import re
+import socket
 import time
 
 import gradio as gr
@@ -164,7 +166,19 @@ def build():
     return demo
 
 
+def free_port(start=int(os.environ.get("GRADIO_SERVER_PORT", 7860)), tries=100):
+    """First free local port from 7860 on, so the app still starts if 7860 is taken."""
+    for port in range(start, start + tries):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            try:
+                s.bind(("127.0.0.1", port))
+                return port
+            except OSError:
+                continue
+    raise OSError(f"no free port in {start}-{start + tries - 1}")
+
+
 if __name__ == "__main__":
     print("loading default model ...")
     registry.get(registry.DEFAULT_MODEL)  # load + warm up before the first chat message
-    build().launch(server_name="127.0.0.1", server_port=7860, css=CSS)
+    build().launch(server_name="127.0.0.1", server_port=free_port(), css=CSS)

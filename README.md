@@ -13,12 +13,14 @@ model inside a live chat application.
 
 ## Quick start
 
-Tested with **Python 3.13** on Windows 11; the app needs only a CPU.
+**Requires Python 3.12 or 3.13** (tested with 3.13 on Windows 11); the app needs only a CPU.
+Python 3.14 does not work yet: `gensim 4.4.0` has no ready-made package for it, so
+`pip install` stops with *"No matching distribution found for gensim==4.4.0"*.
 
 ```bash
 git clone https://github.com/Gabi8347/turkish-chat-moderation.git
 cd turkish-chat-moderation
-python -m venv .venv
+py -3.13 -m venv .venv            # Windows   (macOS / Linux: python3.13 -m venv .venv)
 .venv\Scripts\activate            # Windows   (macOS / Linux: source .venv/bin/activate)
 pip install -r requirements.txt
 ```
@@ -33,7 +35,8 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Open http://127.0.0.1:7860. On the first start the default model (≈ 111 MB) is downloaded
+Open http://127.0.0.1:7860 (if that port is busy, the app takes the next free one and prints
+the address in the terminal). On the first start the default model (≈ 111 MB) is downloaded
 from the Hugging Face Hub; other models are downloaded when you select them.
 
 ## The application
