@@ -40,7 +40,7 @@ from the Hugging Face Hub; other models are downloaded when you select them.
 
 - a chat box: every message is labeled live **clean / offensive** with a confidence score
 - offensive messages are **masked** – words found by the lexicon matcher are starred out
-  (`s.i.k.t.i.r git` → `s********** git`); if the model flags a message without any lexicon word,
+  (`s.a.l.a.k mısın` → `s******** mısın`); if the model flags a message without any lexicon word,
   the whole message is hidden
 - a side panel logs the **response time of every message** with mean / p95 against the latency budget
 - a **model switch** between all seven models (default: quantized BERTurk INT8 on ONNX Runtime)
@@ -57,7 +57,7 @@ sync with the code.
 | Step | File | What happens |
 |---|---|---|
 | User interface | `app.py` | Gradio chat UI, latency panel, model switch, compare panel |
-| Preprocessing | `src/normalize.py` | regex normalization: `@USER`/URL placeholders, spaced letters (`s.i.k` → `sik`), leetspeak (`gelm3ye` → `gelmeye`), Turkish lowercasing (I → ı, İ → i), repeated letters (`çoooook` → `çok`) |
+| Preprocessing | `src/normalize.py` | regex normalization: `@USER`/URL placeholders, spaced letters (`s.a.l.a.k` → `salak`), leetspeak (`gelm3ye` → `gelmeye`), Turkish lowercasing (I → ı, İ → i), repeated letters (`çoooook` → `çok`) |
 | Model | `src/registry.py` → one of the seven models below | P(offensive) for the normalized message |
 | Decision | `src/registry.py` | P ≥ threshold (each model's threshold was chosen on the validation set) |
 | Post-processing | `app.py`, `src/lexicon.py` | mask lexicon words, or hide the message |
@@ -137,9 +137,10 @@ Official OffensEval-TR 2020 test set (3,528 tweets). Latency: one message at a t
 **Limitations**
 
 - The data are tweets, not game chat; the annotation is noisy (some swear words are labeled clean).
-- **Failure example:** `4mk bu ne biçim oyun ya` ("4mk" = leetspeak for the swear word "amk") is
-  labeled **clean** by the deployed BERTurk INT8 model (P(offensive) = 0.04), although the lexicon
-  matcher finds "amk" in it – the digit-for-letter spelling is rare in the training tweets.
+- **Failure example:** `4ptal mısın` ("4ptal" = leetspeak for the insult "aptal", *stupid*) is
+  labeled **clean** by the deployed BERTurk INT8 model (P(offensive) = 0.11 < threshold 0.25) and by
+  every other learned model, although the lexicon matcher finds "aptal" in it – word-initial
+  digit-for-letter spellings are rare in the training tweets.
 - Sarcasm and insults without offensive words are often missed by every model.
 - Dynamic quantization scales activations per call, so INT8 results depend on how messages are
   batched; PyTorch INT8 results also vary slightly with the CPU thread count.
