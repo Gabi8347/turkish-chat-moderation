@@ -27,11 +27,11 @@ DEFAULT_LABEL = registry.BY_KEY[registry.DEFAULT_MODEL].label
 
 EXAMPLES = [
     "akşam maça kim geliyor, 9da sunucudayım",
-    "s.i.k.t.i.r git buradan",
-    "4mk bu ne biçim oyun ya",
-    "ŞEREFSİZLER yine hile yapıyor",
+    "s.a.l.a.k mısın sen",
+    "4ptal mısın",
+    "GERİZEKALI yine hile yapıyor",
     "götürdüm takımı sırtımda, gg",
-    "senin gibi oyuncuların ta ağzına sıçayım",
+    "kafasız herif oyunu bırak",
     "çok güzel oynadın kanka helal olsun",
 ]
 
